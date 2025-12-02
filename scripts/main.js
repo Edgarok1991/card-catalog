@@ -242,20 +242,21 @@ function createCardHTML(course) {
     // Нормализация названия категории для CSS класса
     const categoryClass = course.category.toLowerCase().replace(/\s+&\s+/g, '-').replace(/\s+/g, '-');
     
-    // Качественные фотографии людей из Unsplash (400x500)
+    // PNG изображения людей с прозрачным фоном
+    // Используем PNG Tree и FreePNG для качественных изображений без фона
     const photoUrls = [
-        'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=500&fit=crop&q=80',
-        'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=500&fit=crop&q=80',
-        'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=500&fit=crop&q=80',
-        'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=500&fit=crop&q=80',
-        'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=500&fit=crop&q=80',
-        'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&h=500&fit=crop&q=80',
-        'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&h=500&fit=crop&q=80',
-        'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&h=500&fit=crop&q=80',
-        'https://images.unsplash.com/photo-1519345182560-3f2917c472ef?w=400&h=500&fit=crop&q=80',
-        'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=400&h=500&fit=crop&q=80',
-        'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=400&h=500&fit=crop&q=80',
-        'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=400&h=500&fit=crop&q=80'
+        'https://www.freepnglogos.com/uploads/men-png/men-png-image-download-picture-7.png',
+        'https://www.freepnglogos.com/uploads/women-png/download-beautiful-women-png-image-png-image-pngimg-21.png',
+        'https://www.freepnglogos.com/uploads/men-png/men-person-wearing-blue-denim-jeans-png-image-26.png',
+        'https://www.freepnglogos.com/uploads/women-png/women-business-transparent-png-pictures-icons-and-png-0.png',
+        'https://www.freepnglogos.com/uploads/men-png/man-png-image-purepng-transparent-png-image-library-2.png',
+        'https://www.freepnglogos.com/uploads/women-png/women-png-image-purepng-transparent-png-image-library-0.png',
+        'https://www.freepnglogos.com/uploads/men-png/men-png-images-download-picture-gallery-8.png',
+        'https://www.freepnglogos.com/uploads/women-png/beautiful-girl-png-pic-image-png-arts-3.png',
+        'https://www.freepnglogos.com/uploads/men-png/man-people-transparent-png-pictures-icons-and-png-6.png',
+        'https://www.freepnglogos.com/uploads/women-png/women-business-transparent-background-png-15.png',
+        'https://www.freepnglogos.com/uploads/men-png/men-business-png-transparent-images-png-all-12.png',
+        'https://www.freepnglogos.com/uploads/women-png/women-professional-transparent-png-18.png'
     ];
     
     const avatarUrl = photoUrls[(course.id - 1) % photoUrls.length];
