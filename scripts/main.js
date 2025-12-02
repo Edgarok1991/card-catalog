@@ -251,13 +251,15 @@ function createCardHTML(course) {
     return `
         <article class="card" data-category="${escapeHtml(course.category)}" tabindex="0" role="article" aria-label="${escapeHtml(course.title)} course">
             <div class="card__image">
-                <img 
-                    src="${avatarUrl}" 
-                    alt="${escapeHtml(course.author)}"
-                    class="card__image-photo"
-                    loading="lazy"
-                    onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
-                >
+                <div class="card__image-circle">
+                    <img 
+                        src="${avatarUrl}" 
+                        alt="${escapeHtml(course.author)}"
+                        class="card__image-photo"
+                        loading="lazy"
+                        onerror="this.style.display='none'; this.parentElement.nextElementSibling.style.display='flex';"
+                    >
+                </div>
                 <div class="card__image-placeholder" style="display: none;">
                     <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                         <circle cx="30" cy="20" r="12" fill="#E5E5E5"/>
