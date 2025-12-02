@@ -242,8 +242,11 @@ function createCardHTML(course) {
     // Нормализация названия категории для CSS класса
     const categoryClass = course.category.toLowerCase().replace(/\s+&\s+/g, '-').replace(/\s+/g, '-');
     
-    // Используем UI Avatars для реалистичных изображений
-    const avatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(course.author)}&size=400&background=random&color=fff&bold=true`;
+    // Используем разные сервисы для более реалистичных изображений
+    const avatarId = course.id;
+    const gender = avatarId % 2 === 0 ? 'women' : 'men';
+    const photoNumber = Math.floor((avatarId - 1) / 2) + 1;
+    const avatarUrl = `https://randomuser.me/api/portraits/${gender}/${photoNumber}.jpg`;
     
     return `
         <article class="card" data-category="${escapeHtml(course.category)}" tabindex="0" role="article" aria-label="${escapeHtml(course.title)} course">
