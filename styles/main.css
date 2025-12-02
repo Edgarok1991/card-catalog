@@ -430,7 +430,7 @@
 
 .cards {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: calc(20px + 10 * (100vw - 320px) / 1600);
   transition: opacity 0.3s ease;
 }
@@ -442,6 +442,11 @@
 @media (min-width: 1024px) {
   .cards {
     grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (max-width: 767px) {
+  .cards {
+    grid-template-columns: 1fr;
   }
 }
 .cards--fade-out {
@@ -530,34 +535,44 @@
   width: 100%;
   aspect-ratio: 16/10;
   overflow: hidden;
-  background: linear-gradient(135deg, #F7D66C 0%, #F4CA4D 100%);
-}
-.card__image::before, .card__image::after {
-  content: "";
-  position: absolute;
-  border-radius: 50%;
-  opacity: 0.15;
+  background: #F2C94C;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
 }
 .card__image::before {
-  width: 350px;
-  height: 350px;
-  background: rgba(255, 255, 255, 0.3);
-  bottom: -120px;
-  right: -80px;
+  content: "";
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  border-radius: 50%;
+  background: transparent;
+  border: 60px solid rgba(255, 255, 255, 0.08);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
 }
 .card__image::after {
-  width: 250px;
-  height: 250px;
-  background: rgba(255, 255, 255, 0.2);
-  top: -80px;
-  left: -60px;
+  content: "";
+  position: absolute;
+  width: 280px;
+  height: 280px;
+  border-radius: 50%;
+  background: transparent;
+  border: 40px solid rgba(255, 255, 255, 0.06);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
 }
 
 .card__image-photo {
-  width: 100%;
+  width: auto;
   height: 100%;
-  object-fit: cover;
-  object-position: center top;
+  max-width: 100%;
+  object-fit: contain;
+  object-position: center bottom;
   display: block;
   transition: transform 0.3s ease;
   position: relative;
@@ -565,7 +580,7 @@
 }
 
 .card:hover .card__image-photo {
-  transform: scale(1.05);
+  transform: scale(1.03) translateY(-5px);
 }
 
 .card__image-placeholder {
@@ -578,7 +593,6 @@
   top: 0;
   left: 0;
   z-index: 1;
-  background: linear-gradient(135deg, #F7D66C 0%, #F4CA4D 100%);
 }
 .card__image-placeholder svg {
   width: 40%;

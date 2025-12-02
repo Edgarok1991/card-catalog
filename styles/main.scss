@@ -291,7 +291,7 @@ $desktop: 1920px;
 // Карточки
 .cards {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: calc(20px + (30 - 20) * ((100vw - 320px) / (1920 - 320)));
     transition: opacity 0.3s ease;
     
@@ -301,6 +301,10 @@ $desktop: 1920px;
     
     @media (min-width: 1024px) {
         grid-template-columns: repeat(3, 1fr);
+    }
+    
+    @media (max-width: 767px) {
+        grid-template-columns: 1fr;
     }
     
     &--fade-out {
@@ -360,41 +364,47 @@ $desktop: 1920px;
     width: 100%;
     aspect-ratio: 16 / 10;
     overflow: hidden;
-    background: linear-gradient(135deg, #F7D66C 0%, #F4CA4D 100%);
+    background: #F2C94C; // Чистый желтый как в макете
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
     
-    // Декоративные круги на фоне
-    &::before,
+    // Декоративные концентрические круги (как в макете)
+    &::before {
+        content: '';
+        position: absolute;
+        width: 400px;
+        height: 400px;
+        border-radius: 50%;
+        background: transparent;
+        border: 60px solid rgba(255, 255, 255, 0.08);
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        pointer-events: none;
+    }
+    
     &::after {
         content: '';
         position: absolute;
+        width: 280px;
+        height: 280px;
         border-radius: 50%;
-        opacity: 0.15;
-    }
-    
-    // Большой круг справа
-    &::before {
-        width: 350px;
-        height: 350px;
-        background: rgba(255, 255, 255, 0.3);
-        bottom: -120px;
-        right: -80px;
-    }
-    
-    // Средний круг слева
-    &::after {
-        width: 250px;
-        height: 250px;
-        background: rgba(255, 255, 255, 0.2);
-        top: -80px;
-        left: -60px;
+        background: transparent;
+        border: 40px solid rgba(255, 255, 255, 0.06);
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        pointer-events: none;
     }
 }
 
 .card__image-photo {
-    width: 100%;
+    width: auto;
     height: 100%;
-    object-fit: cover;
-    object-position: center top;
+    max-width: 100%;
+    object-fit: contain;
+    object-position: center bottom;
     display: block;
     transition: transform 0.3s ease;
     position: relative;
@@ -402,7 +412,7 @@ $desktop: 1920px;
 }
 
 .card:hover .card__image-photo {
-    transform: scale(1.05);
+    transform: scale(1.03) translateY(-5px);
 }
 
 .card__image-placeholder {
@@ -415,7 +425,6 @@ $desktop: 1920px;
     top: 0;
     left: 0;
     z-index: 1;
-    background: linear-gradient(135deg, #F7D66C 0%, #F4CA4D 100%);
     
     svg {
         width: 40%;
