@@ -242,25 +242,34 @@ function createCardHTML(course) {
     // Нормализация названия категории для CSS класса
     const categoryClass = course.category.toLowerCase().replace(/\s+&\s+/g, '-').replace(/\s+/g, '-');
     
-    // Используем реальные фотографии людей в высоком качестве
-    const avatarId = course.id;
-    const gender = avatarId % 2 === 0 ? 'women' : 'men';
-    const photoNumber = ((avatarId - 1) % 99) + 1; // 99 фото доступно для каждого пола
-    // Medium размер (128x128) для лучшего качества в круглой рамке
-    const avatarUrl = `https://randomuser.me/api/portraits/med/${gender}/${photoNumber}.jpg`;
+    // Качественные фотографии людей из Unsplash (400x500)
+    const photoUrls = [
+        'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=500&fit=crop&q=80',
+        'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=500&fit=crop&q=80',
+        'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=500&fit=crop&q=80',
+        'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=500&fit=crop&q=80',
+        'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=500&fit=crop&q=80',
+        'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&h=500&fit=crop&q=80',
+        'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&h=500&fit=crop&q=80',
+        'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&h=500&fit=crop&q=80',
+        'https://images.unsplash.com/photo-1519345182560-3f2917c472ef?w=400&h=500&fit=crop&q=80',
+        'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=400&h=500&fit=crop&q=80',
+        'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=400&h=500&fit=crop&q=80',
+        'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=400&h=500&fit=crop&q=80'
+    ];
+    
+    const avatarUrl = photoUrls[(course.id - 1) % photoUrls.length];
     
     return `
         <article class="card" data-category="${escapeHtml(course.category)}" tabindex="0" role="article" aria-label="${escapeHtml(course.title)} course">
             <div class="card__image">
-                <div class="card__image-circle">
-                    <img 
-                        src="${avatarUrl}" 
-                        alt="${escapeHtml(course.author)}"
-                        class="card__image-photo"
-                        loading="lazy"
-                        onerror="this.style.display='none'; this.parentElement.nextElementSibling.style.display='flex';"
-                    >
-                </div>
+                <img 
+                    src="${avatarUrl}" 
+                    alt="${escapeHtml(course.author)}"
+                    class="card__image-photo"
+                    loading="lazy"
+                    onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+                >
                 <div class="card__image-placeholder" style="display: none;">
                     <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                         <circle cx="30" cy="20" r="12" fill="#E5E5E5"/>

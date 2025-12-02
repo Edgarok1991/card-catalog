@@ -360,10 +360,7 @@ $desktop: 1920px;
     width: 100%;
     aspect-ratio: 16 / 10;
     overflow: hidden;
-    background: linear-gradient(135deg, #FFB649 0%, #FFCF5C 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    background: linear-gradient(135deg, #F7D66C 0%, #F4CA4D 100%);
     
     // Декоративные круги на фоне
     &::before,
@@ -376,20 +373,20 @@ $desktop: 1920px;
     
     // Большой круг справа
     &::before {
-        width: 300px;
-        height: 300px;
+        width: 350px;
+        height: 350px;
         background: rgba(255, 255, 255, 0.3);
-        bottom: -100px;
-        right: -50px;
+        bottom: -120px;
+        right: -80px;
     }
     
     // Средний круг слева
     &::after {
-        width: 200px;
-        height: 200px;
+        width: 250px;
+        height: 250px;
         background: rgba(255, 255, 255, 0.2);
-        top: -50px;
-        left: -30px;
+        top: -80px;
+        left: -60px;
     }
 }
 
@@ -397,37 +394,15 @@ $desktop: 1920px;
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: center top;
     display: block;
     transition: transform 0.3s ease;
+    position: relative;
+    z-index: 1;
 }
 
 .card:hover .card__image-photo {
-    transform: scale(1.1);
-}
-
-.card:hover .card__image-circle {
-    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
     transform: scale(1.05);
-    transition: all 0.3s ease;
-}
-
-.card__image-circle {
-    width: 180px;
-    height: 180px;
-    border-radius: 50%;
-    overflow: hidden;
-    position: relative;
-    z-index: 2;
-    background: rgba(255, 255, 255, 0.1);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-    
-    @media (max-width: 768px) {
-        width: 140px;
-        height: 140px;
-    }
 }
 
 .card__image-placeholder {
@@ -439,7 +414,8 @@ $desktop: 1920px;
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 2;
+    z-index: 1;
+    background: linear-gradient(135deg, #F7D66C 0%, #F4CA4D 100%);
     
     svg {
         width: 40%;
