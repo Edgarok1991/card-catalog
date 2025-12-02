@@ -1,9 +1,9 @@
-// Constants
+// Константы
 const ITEMS_PER_PAGE = 9;
 const DEBOUNCE_DELAY = 300;
 const ANIMATION_DURATION = 300;
 
-// Course data
+// Данные курсов
 const coursesData = [
     {
         id: 1,
@@ -103,12 +103,12 @@ const coursesData = [
     }
 ];
 
-// State
+// Состояние приложения
 let currentFilter = 'all';
 let searchQuery = '';
 let displayedCount = ITEMS_PER_PAGE;
 
-// DOM elements cache
+// Кэш DOM элементов
 let dom = {
     cardsContainer: null,
     searchInput: null,
@@ -117,7 +117,7 @@ let dom = {
     filterCountElements: new Map()
 };
 
-// Utility: Debounce function
+// Утилита: Функция debounce (задержка выполнения)
 function debounce(func, wait) {
     let timeout;
     return function executedFunction(...args) {
@@ -126,21 +126,21 @@ function debounce(func, wait) {
     };
 }
 
-// Utility: Escape HTML to prevent XSS
+// Утилита: Экранирование HTML для защиты от XSS
 function escapeHtml(text) {
     const div = document.createElement('div');
     div.textContent = text;
     return div.innerHTML;
 }
 
-// Cache DOM elements
+// Кэширование DOM элементов
 function cacheDOMElements() {
     dom.cardsContainer = document.querySelector('[data-cards]');
     dom.searchInput = document.querySelector('[data-search]');
     dom.filterButtons = document.querySelectorAll('[data-filter]');
     dom.loadMoreButton = document.querySelector('[data-load-more]');
     
-    // Cache filter count elements
+    // Кэшируем элементы счётчиков фильтров
     dom.filterButtons.forEach(button => {
         const countElement = button.querySelector('.filters__count');
         if (countElement) {
@@ -149,17 +149,17 @@ function cacheDOMElements() {
     });
 }
 
-// Initialize
+// Инициализация приложения
 function init() {
     cacheDOMElements();
     
-    // Validate required DOM elements
+    // Проверка наличия обязательных DOM элементов
     if (!dom.cardsContainer || !dom.searchInput || !dom.loadMoreButton) {
-        console.error('Required DOM elements not found');
+        console.error('Не найдены обязательные DOM элементы');
         return;
     }
     
-    // Restore state from URL
+    // Восстановление состояния из URL
     restoreStateFromURL();
     
     renderCards();
@@ -167,22 +167,22 @@ function init() {
     setupKeyboardNavigation();
 }
 
-// Render cards with animation
+// Отрисовка карточек с анимацией
 function renderCards(animate = false) {
     const filteredCourses = getFilteredCourses();
     
-    // Add fade out animation before re-render
+    // Добавляем анимацию исчезновения перед перерисовкой
     if (animate) {
         dom.cardsContainer.classList.add('cards--fade-out');
     }
     
     setTimeout(() => {
-        // Handle empty state
+        // Обработка пустого состояния
         if (filteredCourses.length === 0) {
             dom.cardsContainer.innerHTML = `
                 <div class="cards__empty" role="status" aria-live="polite">
-                    <p class="cards__empty-text">No courses found matching your criteria</p>
-                    <p class="cards__empty-hint">Try adjusting your search or filters</p>
+                    <p class="cards__empty-text">Курсы не найдены</p>
+                    <p class="cards__empty-hint">Попробуйте изменить параметры поиска или фильтры</p>
                 </div>
             `;
             dom.loadMoreButton.classList.add('button--hidden');
@@ -193,7 +193,7 @@ function renderCards(animate = false) {
         
         const displayedCourses = filteredCourses.slice(0, displayedCount);
         
-        // Use DocumentFragment for better performance
+        // Используем DocumentFragment для оптимизации производительности
         const fragment = document.createDocumentFragment();
         const tempContainer = document.createElement('div');
         tempContainer.innerHTML = displayedCourses.map(course => createCardHTML(course)).join('');
@@ -205,10 +205,10 @@ function renderCards(animate = false) {
         dom.cardsContainer.innerHTML = '';
         dom.cardsContainer.appendChild(fragment);
         
-        // Remove fade animation class
+        // Убираем класс анимации
         dom.cardsContainer.classList.remove('cards--fade-out');
         
-        // Update load more button visibility using CSS class
+        // Обновляем видимость кнопки "Загрузить ещё"
         dom.loadMoreButton.classList.toggle('button--hidden', filteredCourses.length <= displayedCount);
         
         updateFilterCounts();
@@ -217,13 +217,13 @@ function renderCards(animate = false) {
     }, animate ? ANIMATION_DURATION : 0);
 }
 
-// Update ARIA live region for screen readers
+// Обновление ARIA live региона для скрин-ридеров
 function updateAriaLive(count) {
     const message = count === 0 
-        ? 'No courses found' 
-        : `Showing ${Math.min(displayedCount, count)} of ${count} courses`;
+        ? 'Курсы не найдены' 
+        : `Показано ${Math.min(displayedCount, count)} из ${count} курсов`;
     
-    // Update or create aria-live region
+    // Обновляем или создаём aria-live регион
     let liveRegion = document.getElementById('results-announcement');
     if (!liveRegion) {
         liveRegion = document.createElement('div');
@@ -237,12 +237,12 @@ function updateAriaLive(count) {
     liveRegion.textContent = message;
 }
 
-// Create card HTML
+// Создание HTML карточки курса
 function createCardHTML(course) {
-    // Normalize category name for CSS class
+    // Нормализация названия категории для CSS класса
     const categoryClass = course.category.toLowerCase().replace(/\s+&\s+/g, '-').replace(/\s+/g, '-');
     
-    // Use UI Avatars for realistic placeholder images
+    // Используем UI Avatars для реалистичных изображений
     const avatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(course.author)}&size=400&background=random&color=fff&bold=true`;
     
     return `
@@ -276,7 +276,7 @@ function createCardHTML(course) {
     `;
 }
 
-// Get filtered courses
+// Получение отфильтрованных курсов
 function getFilteredCourses() {
     return coursesData.filter(course => {
         const matchesCategory = currentFilter === 'all' || course.category === currentFilter;
@@ -285,7 +285,7 @@ function getFilteredCourses() {
     });
 }
 
-// Update filter counts
+// Обновление счётчиков фильтров
 function updateFilterCounts() {
     dom.filterButtons.forEach(button => {
         const filter = button.dataset.filter;
@@ -300,29 +300,29 @@ function updateFilterCounts() {
     });
 }
 
-// Handle search with debounce
+// Обработка поиска с debounce
 function handleSearch(value) {
     searchQuery = value;
     displayedCount = ITEMS_PER_PAGE;
-    renderCards(true); // Animate on search
+    renderCards(true); // Анимация при поиске
 }
 
-// Attach event listeners
+// Привязка обработчиков событий
 function attachEventListeners() {
-    // Search with debounce for better performance
+    // Поиск с debounce для оптимизации производительности
     const debouncedSearch = debounce(handleSearch, DEBOUNCE_DELAY);
     
     dom.searchInput.addEventListener('input', (e) => {
         debouncedSearch(e.target.value);
     });
     
-    // Filters
+    // Фильтры
     dom.filterButtons.forEach(button => {
         button.addEventListener('click', () => {
             handleFilterChange(button.dataset.filter);
         });
         
-        // Keyboard support for filters
+        // Поддержка клавиатуры для фильтров
         button.addEventListener('keydown', (e) => {
             if (e.key === 'Enter' || e.key === ' ') {
                 e.preventDefault();
@@ -331,13 +331,13 @@ function attachEventListeners() {
         });
     });
     
-    // Load more
+    // Кнопка "Загрузить ещё"
     dom.loadMoreButton.addEventListener('click', () => {
         const previousCount = Math.min(displayedCount, getFilteredCourses().length);
         displayedCount += ITEMS_PER_PAGE;
         renderCards();
         
-        // Focus on first new card for accessibility
+        // Фокус на первой новой карточке для accessibility
         setTimeout(() => {
             const cards = dom.cardsContainer.querySelectorAll('.card');
             if (cards[previousCount]) {
@@ -347,32 +347,32 @@ function attachEventListeners() {
     });
 }
 
-// Handle filter change
+// Обработка изменения фильтра
 function handleFilterChange(filter) {
     currentFilter = filter;
     displayedCount = ITEMS_PER_PAGE;
     
-    // Update active state
+    // Обновление активного состояния
     dom.filterButtons.forEach(btn => btn.classList.remove('filters__button--active'));
     const activeButton = Array.from(dom.filterButtons).find(btn => btn.dataset.filter === filter);
     if (activeButton) {
         activeButton.classList.add('filters__button--active');
     }
     
-    renderCards(true); // Animate on filter change
+    renderCards(true); // Анимация при смене фильтра
 }
 
-// Setup keyboard navigation
+// Настройка навигации с клавиатуры
 function setupKeyboardNavigation() {
     document.addEventListener('keydown', (e) => {
-        // Clear search with Escape
+        // Очистка поиска по Escape
         if (e.key === 'Escape' && document.activeElement === dom.searchInput) {
             dom.searchInput.value = '';
             handleSearch('');
             dom.searchInput.blur();
         }
         
-        // Navigate cards with arrow keys when focused
+        // Навигация по карточкам стрелками вверх/вниз
         if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
             const cards = Array.from(dom.cardsContainer.querySelectorAll('.card'));
             const currentIndex = cards.indexOf(document.activeElement);
@@ -382,16 +382,16 @@ function setupKeyboardNavigation() {
                 let nextIndex;
                 
                 if (e.key === 'ArrowDown') {
-                    nextIndex = Math.min(currentIndex + 3, cards.length - 1); // Move down a row (3 cards)
+                    nextIndex = Math.min(currentIndex + 3, cards.length - 1); // Вниз на ряд (3 карточки)
                 } else {
-                    nextIndex = Math.max(currentIndex - 3, 0); // Move up a row
+                    nextIndex = Math.max(currentIndex - 3, 0); // Вверх на ряд
                 }
                 
                 cards[nextIndex]?.focus();
             }
         }
         
-        // Navigate with left/right arrows
+        // Навигация стрелками влево/вправо
         if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
             const cards = Array.from(dom.cardsContainer.querySelectorAll('.card'));
             const currentIndex = cards.indexOf(document.activeElement);
@@ -408,7 +408,7 @@ function setupKeyboardNavigation() {
     });
 }
 
-// Save state to URL (History API)
+// Сохранение состояния в URL (History API)
 function updateURL() {
     const params = new URLSearchParams();
     
@@ -427,7 +427,7 @@ function updateURL() {
     window.history.replaceState({}, '', newURL);
 }
 
-// Restore state from URL
+// Восстановление состояния из URL
 function restoreStateFromURL() {
     const params = new URLSearchParams(window.location.search);
     
@@ -443,6 +443,6 @@ function restoreStateFromURL() {
     }
 }
 
-// Start the app
+// Запуск приложения
 init();
 

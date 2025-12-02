@@ -1,4 +1,4 @@
-// Variables
+// Переменные
 $color-primary: #49BBBD;
 $color-text-dark: #252641;
 $color-text-light: #696984;
@@ -9,12 +9,12 @@ $color-background: #F8F9FA;
 
 $font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 
-// Breakpoints
+// Точки останова (Breakpoints)
 $mobile: 320px;
 $tablet: 768px;
 $desktop: 1920px;
 
-// Mixins
+// Миксины
 @mixin responsive-font($min-size, $max-size, $min-width: 320, $max-width: 1920) {
     font-size: calc(#{$min-size}px + (#{$max-size} - #{$min-size}) * ((100vw - #{$min-width}px) / (#{$max-width} - #{$min-width})));
     
@@ -39,14 +39,14 @@ $desktop: 1920px;
     }
 }
 
-// Reset
+// Сброс стилей
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
-// Screen reader only (for accessibility)
+// Скрыто для всех, кроме скрин-ридеров (для accessibility)
 .sr-only {
     position: absolute;
     width: 1px;
@@ -59,7 +59,7 @@ $desktop: 1920px;
     border-width: 0;
 }
 
-// Page
+// Страница
 .page {
     font-family: $font-family;
     color: $color-text-dark;
@@ -90,7 +90,7 @@ $desktop: 1920px;
     overflow: hidden;
 }
 
-// Decorative dots pattern (like in Figma)
+// Декоративный паттерн из точек (как в Figma)
 .decoration {
     position: absolute;
     
@@ -111,7 +111,7 @@ $desktop: 1920px;
     }
 }
 
-// Courses
+// Курсы
 .courses {
     width: 100%;
     @include responsive-spacing('padding-top', 40, 80);
@@ -161,7 +161,7 @@ $desktop: 1920px;
     @include responsive-spacing('margin-top', 30, 60);
 }
 
-// Filters
+// Фильтры
 .filters {
     display: flex;
     gap: 8px;
@@ -232,7 +232,7 @@ $desktop: 1920px;
     font-weight: 600;
 }
 
-// Search
+// Поиск
 .search {
     position: relative;
     min-width: 200px;
@@ -288,7 +288,7 @@ $desktop: 1920px;
     }
 }
 
-// Cards
+// Карточки
 .cards {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -520,7 +520,7 @@ $desktop: 1920px;
     }
 }
 
-// Animations
+// Анимации
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -546,7 +546,7 @@ $desktop: 1920px;
 .card {
     animation: fadeIn 0.4s ease backwards;
     
-    // Stagger animation for multiple cards
+    // Поочерёдная анимация для нескольких карточек
     @for $i from 1 through 12 {
         &:nth-child(#{$i}) {
             animation-delay: #{$i * 0.05}s;
@@ -558,7 +558,7 @@ $desktop: 1920px;
     animation: slideUp 0.4s ease;
 }
 
-// Reduced motion support for accessibility
+// Поддержка уменьшенной анимации для accessibility
 @media (prefers-reduced-motion: reduce) {
     *,
     *::before,
