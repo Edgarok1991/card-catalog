@@ -1,0 +1,572 @@
+// Variables
+$color-primary: #49BBBD;
+$color-text-dark: #252641;
+$color-text-light: #696984;
+$color-text-muted: #B8B8D2;
+$color-border: #E5E5E5;
+$color-white: #FFFFFF;
+$color-background: #F8F9FA;
+
+$font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+
+// Breakpoints
+$mobile: 320px;
+$tablet: 768px;
+$desktop: 1920px;
+
+// Mixins
+@mixin responsive-font($min-size, $max-size, $min-width: 320, $max-width: 1920) {
+    font-size: calc(#{$min-size}px + (#{$max-size} - #{$min-size}) * ((100vw - #{$min-width}px) / (#{$max-width} - #{$min-width})));
+    
+    @media (max-width: #{$min-width}px) {
+        font-size: #{$min-size}px;
+    }
+    
+    @media (min-width: #{$max-width}px) {
+        font-size: #{$max-size}px;
+    }
+}
+
+@mixin responsive-spacing($property, $min-value, $max-value, $min-width: 320, $max-width: 1920) {
+    #{$property}: calc(#{$min-value}px + (#{$max-value} - #{$min-value}) * ((100vw - #{$min-width}px) / (#{$max-width} - #{$min-width})));
+    
+    @media (max-width: #{$min-width}px) {
+        #{$property}: #{$min-value}px;
+    }
+    
+    @media (min-width: #{$max-width}px) {
+        #{$property}: #{$max-value}px;
+    }
+}
+
+// Reset
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+// Screen reader only (for accessibility)
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+// Page
+.page {
+    font-family: $font-family;
+    color: $color-text-dark;
+    background-color: $color-background;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: smooth;
+    position: relative;
+    overflow-x: hidden;
+}
+
+.page__content {
+    width: 100%;
+    min-height: 100vh;
+    position: relative;
+    z-index: 1;
+}
+
+.page__decorations {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+}
+
+// Decorative dots pattern (like in Figma)
+.decoration {
+    position: absolute;
+    
+    &--top-right {
+        top: -50px;
+        right: -50px;
+        width: 400px;
+        height: 400px;
+        background-image: radial-gradient(circle, $color-primary 2px, transparent 2px);
+        background-size: 30px 30px;
+        opacity: 0.15;
+        
+        @media (max-width: 768px) {
+            width: 250px;
+            height: 250px;
+            background-size: 20px 20px;
+        }
+    }
+}
+
+// Courses
+.courses {
+    width: 100%;
+    @include responsive-spacing('padding-top', 40, 80);
+    @include responsive-spacing('padding-bottom', 40, 80);
+}
+
+.courses__container {
+    max-width: 1440px;
+    margin: 0 auto;
+    @include responsive-spacing('padding-left', 20, 80);
+    @include responsive-spacing('padding-right', 20, 80);
+}
+
+.courses__header {
+    text-align: center;
+    @include responsive-spacing('margin-bottom', 30, 60);
+}
+
+.courses__subtitle {
+    @include responsive-font(10, 14);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: $color-text-muted;
+    margin-bottom: 12px;
+    font-weight: 500;
+}
+
+.courses__title {
+    @include responsive-font(28, 48);
+    font-weight: 700;
+    color: $color-text-dark;
+    line-height: 1.2;
+}
+
+.courses__controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    @include responsive-spacing('margin-bottom', 30, 50);
+    flex-wrap: wrap;
+}
+
+.courses__footer {
+    display: flex;
+    justify-content: center;
+    @include responsive-spacing('margin-top', 30, 60);
+}
+
+// Filters
+.filters {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    flex: 1;
+}
+
+.filters__button {
+    @include responsive-font(12, 14);
+    @include responsive-spacing('padding-left', 16, 20);
+    @include responsive-spacing('padding-right', 16, 20);
+    @include responsive-spacing('padding-top', 10, 12);
+    @include responsive-spacing('padding-bottom', 10, 12);
+    border: 1px solid $color-border;
+    background: $color-white;
+    color: $color-text-light;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: inherit;
+    font-weight: 500;
+    white-space: nowrap;
+    outline-offset: 2px;
+    
+    &:hover {
+        border-color: $color-primary;
+        color: $color-primary;
+        transform: translateY(-1px);
+    }
+    
+    &:focus {
+        outline: 2px solid $color-primary;
+        border-color: $color-primary;
+    }
+    
+    &:focus:not(:focus-visible) {
+        outline: none;
+    }
+    
+    &--active {
+        background: $color-primary;
+        border-color: $color-primary;
+        color: $color-white;
+        
+        .filters__count {
+            background: rgba(255, 255, 255, 0.2);
+            color: $color-white;
+        }
+        
+        &:hover {
+            background: #3da7a9;
+        }
+    }
+}
+
+.filters__count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 20px;
+    height: 20px;
+    @include responsive-font(10, 12);
+    padding: 2px 6px;
+    background: $color-background;
+    color: $color-text-light;
+    border-radius: 10px;
+    margin-left: 6px;
+    font-weight: 600;
+}
+
+// Search
+.search {
+    position: relative;
+    min-width: 200px;
+    max-width: 300px;
+    flex-shrink: 0;
+    
+    @media (max-width: 600px) {
+        width: 100%;
+        max-width: 100%;
+    }
+}
+
+.search__input {
+    width: 100%;
+    @include responsive-font(13, 14);
+    @include responsive-spacing('padding', 12, 14);
+    padding-right: 45px;
+    border: 1px solid $color-border;
+    border-radius: 6px;
+    font-family: inherit;
+    color: $color-text-dark;
+    background: $color-white;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    
+    &::placeholder {
+        color: $color-text-muted;
+    }
+    
+    &:focus {
+        outline: none;
+        border-color: $color-primary;
+        box-shadow: 0 0 0 3px rgba($color-primary, 0.1);
+    }
+}
+
+.search__button {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: $color-text-muted;
+    cursor: pointer;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.3s ease;
+    
+    &:hover {
+        color: $color-primary;
+    }
+}
+
+// Cards
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: calc(20px + (30 - 20) * ((100vw - 320px) / (1920 - 320)));
+    transition: opacity 0.3s ease;
+    
+    @media (min-width: 768px) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    @media (min-width: 1024px) {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    &--fade-out {
+        opacity: 0;
+    }
+}
+
+.cards__empty {
+    grid-column: 1 / -1;
+    text-align: center;
+    @include responsive-spacing('padding', 40, 80);
+}
+
+.cards__empty-text {
+    @include responsive-font(18, 24);
+    font-weight: 600;
+    color: $color-text-dark;
+    margin-bottom: 12px;
+}
+
+.cards__empty-hint {
+    @include responsive-font(14, 16);
+    color: $color-text-muted;
+}
+
+// Card
+.card {
+    background: $color-white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, outline 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+    cursor: pointer;
+    
+    &:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    }
+    
+    &:focus {
+        outline-color: $color-primary;
+        transform: translateY(-4px);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    }
+    
+    &:focus:not(:focus-visible) {
+        outline-color: transparent;
+    }
+}
+
+.card__image {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    background: linear-gradient(135deg, #F7D16C 0%, #F2C94C 100%);
+}
+
+.card__image-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.card:hover .card__image-photo {
+    transform: scale(1.05);
+}
+
+.card__image-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    
+    svg {
+        width: 40%;
+        height: auto;
+        opacity: 0.3;
+    }
+}
+
+.card__content {
+    @include responsive-spacing('padding', 16, 24);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    flex: 1;
+}
+
+.card__category {
+    @include responsive-font(10, 12);
+    display: inline-flex;
+    align-items: center;
+    align-self: flex-start;
+    padding: 6px 12px;
+    border-radius: 4px;
+    color: $color-white;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    
+    // Category-specific colors
+    &--marketing {
+        background-color: #49BBBD;
+    }
+    
+    &--management {
+        background-color: #9B51E0;
+    }
+    
+    &--hr-recruiting {
+        background-color: #F3762C;
+    }
+    
+    &--design {
+        background-color: #E94C89;
+    }
+    
+    &--development {
+        background-color: #5B72EE;
+    }
+}
+
+.card__title {
+    @include responsive-font(16, 20);
+    font-weight: 700;
+    color: $color-text-dark;
+    line-height: 1.4;
+    flex: 1;
+}
+
+.card__footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    @include responsive-spacing('padding-top', 8, 12);
+    border-top: 1px solid $color-border;
+}
+
+.card__price {
+    @include responsive-font(18, 22);
+    font-weight: 700;
+    color: $color-primary;
+}
+
+.card__author {
+    @include responsive-font(12, 14);
+    color: $color-text-muted;
+    
+    &::before {
+        content: 'by ';
+        color: $color-text-muted;
+    }
+}
+
+// Button
+.button {
+    @include responsive-font(13, 14);
+    @include responsive-spacing('padding-left', 24, 32);
+    @include responsive-spacing('padding-right', 24, 32);
+    @include responsive-spacing('padding-top', 12, 14);
+    @include responsive-spacing('padding-bottom', 12, 14);
+    border: 1px solid $color-border;
+    background: $color-white;
+    color: $color-text-light;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: inherit;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    outline-offset: 2px;
+    
+    &:hover {
+        border-color: $color-primary;
+        color: $color-primary;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        
+        svg {
+            transform: translateY(2px);
+        }
+    }
+    
+    &:focus {
+        outline: 2px solid $color-primary;
+        border-color: $color-primary;
+    }
+    
+    &:focus:not(:focus-visible) {
+        outline: none;
+    }
+    
+    &:active {
+        transform: translateY(0);
+    }
+    
+    &--hidden {
+        display: none;
+    }
+    
+    svg {
+        transition: transform 0.3s ease;
+    }
+}
+
+// Animations
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.card {
+    animation: fadeIn 0.4s ease backwards;
+    
+    // Stagger animation for multiple cards
+    @for $i from 1 through 12 {
+        &:nth-child(#{$i}) {
+            animation-delay: #{$i * 0.05}s;
+        }
+    }
+}
+
+.cards__empty {
+    animation: slideUp 0.4s ease;
+}
+
+// Reduced motion support for accessibility
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+

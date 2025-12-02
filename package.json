@@ -1,0 +1,23 @@
+{
+  "name": "card-catalog",
+  "version": "1.0.0",
+  "description": "Online courses catalog with filters and search",
+  "scripts": {
+    "build:css": "sass styles/main.scss styles/main.css",
+    "watch:css": "sass --watch styles/main.scss:styles/main.css",
+    "start": "live-server"
+  },
+  "keywords": [
+    "catalog",
+    "courses",
+    "vanilla-js",
+    "scss",
+    "bem"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "sass": "^1.69.0"
+  }
+}
+

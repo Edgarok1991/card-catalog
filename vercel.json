@@ -1,0 +1,6 @@
+{
+  "buildCommand": "sass styles/main.scss styles/main.css",
+  "outputDirectory": ".",
+  "cleanUrls": true
+}
+
