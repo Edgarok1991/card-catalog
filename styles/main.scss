@@ -409,10 +409,26 @@ $desktop: 1920px;
     transition: transform 0.3s ease;
     position: relative;
     z-index: 1;
+    // CSS эффект вырезанного фона
+    filter: 
+        contrast(1.1) 
+        saturate(1.1) 
+        brightness(1.05);
+    // Убираем белый фон через blend mode
+    mix-blend-mode: darken;
+    
+    @supports (backdrop-filter: blur(10px)) {
+        // Для современных браузеров
+        backdrop-filter: blur(0px);
+    }
 }
 
 .card:hover .card__image-photo {
     transform: scale(1.05) translateY(-5px);
+    filter: 
+        contrast(1.15) 
+        saturate(1.15) 
+        brightness(1.05);
 }
 
 .card__image-placeholder {
