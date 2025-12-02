@@ -242,21 +242,21 @@ function createCardHTML(course) {
     // Нормализация названия категории для CSS класса
     const categoryClass = course.category.toLowerCase().replace(/\s+&\s+/g, '-').replace(/\s+/g, '-');
     
-    // Качественные портреты людей из Unsplash
-    // Используем фото профессионального качества
+    // PNG изображения людей с вырезанным фоном
+    // Используем качественные PNG с прозрачностью для эффекта "как в макете"
     const photoUrls = [
-        'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=500&fit=crop&q=80',
-        'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=500&fit=crop&q=80',
-        'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=500&fit=crop&q=80',
-        'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=500&fit=crop&q=80',
-        'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=500&fit=crop&q=80',
-        'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&h=500&fit=crop&q=80',
-        'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&h=500&fit=crop&q=80',
-        'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&h=500&fit=crop&q=80',
-        'https://images.unsplash.com/photo-1519345182560-3f2917c472ef?w=400&h=500&fit=crop&q=80',
-        'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=400&h=500&fit=crop&q=80',
-        'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=400&h=500&fit=crop&q=80',
-        'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=400&h=500&fit=crop&q=80'
+        'https://pngimg.com/uploads/man/man_PNG6536.png',
+        'https://pngimg.com/uploads/women/women_PNG6498.png',
+        'https://pngimg.com/uploads/man/man_PNG6525.png',
+        'https://pngimg.com/uploads/women/women_PNG21826.png',
+        'https://pngimg.com/uploads/man/man_PNG6537.png',
+        'https://pngimg.com/uploads/women/women_PNG6510.png',
+        'https://pngimg.com/uploads/man/man_PNG6531.png',
+        'https://pngimg.com/uploads/women/women_PNG21825.png',
+        'https://pngimg.com/uploads/man/man_PNG6529.png',
+        'https://pngimg.com/uploads/women/women_PNG6511.png',
+        'https://pngimg.com/uploads/man/man_PNG6540.png',
+        'https://pngimg.com/uploads/women/women_PNG21827.png'
     ];
     
     const avatarUrl = photoUrls[(course.id - 1) % photoUrls.length];
