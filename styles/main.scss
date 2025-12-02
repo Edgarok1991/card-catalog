@@ -400,35 +400,21 @@ $desktop: 1920px;
 }
 
 .card__image-photo {
-    width: auto;
-    height: 100%;
-    max-width: 100%;
+    width: 60%;
+    height: auto;
+    max-height: 90%;
     object-fit: contain;
     object-position: center bottom;
     display: block;
     transition: transform 0.3s ease;
     position: relative;
     z-index: 1;
-    // CSS эффект вырезанного фона
-    filter: 
-        contrast(1.1) 
-        saturate(1.1) 
-        brightness(1.05);
-    // Убираем белый фон через blend mode
-    mix-blend-mode: darken;
-    
-    @supports (backdrop-filter: blur(10px)) {
-        // Для современных браузеров
-        backdrop-filter: blur(0px);
-    }
+    filter: drop-shadow(0 10px 25px rgba(0, 0, 0, 0.15));
 }
 
 .card:hover .card__image-photo {
-    transform: scale(1.05) translateY(-5px);
-    filter: 
-        contrast(1.15) 
-        saturate(1.15) 
-        brightness(1.05);
+    transform: scale(1.05) translateY(-8px);
+    filter: drop-shadow(0 15px 35px rgba(0, 0, 0, 0.2));
 }
 
 .card__image-placeholder {

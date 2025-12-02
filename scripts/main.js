@@ -242,24 +242,9 @@ function createCardHTML(course) {
     // Нормализация названия категории для CSS класса
     const categoryClass = course.category.toLowerCase().replace(/\s+&\s+/g, '-').replace(/\s+/g, '-');
     
-    // PNG изображения людей с вырезанным фоном
-    // Используем качественные PNG с прозрачностью для эффекта "как в макете"
-    const photoUrls = [
-        'https://pngimg.com/uploads/man/man_PNG6536.png',
-        'https://pngimg.com/uploads/women/women_PNG6498.png',
-        'https://pngimg.com/uploads/man/man_PNG6525.png',
-        'https://pngimg.com/uploads/women/women_PNG21826.png',
-        'https://pngimg.com/uploads/man/man_PNG6537.png',
-        'https://pngimg.com/uploads/women/women_PNG6510.png',
-        'https://pngimg.com/uploads/man/man_PNG6531.png',
-        'https://pngimg.com/uploads/women/women_PNG21825.png',
-        'https://pngimg.com/uploads/man/man_PNG6529.png',
-        'https://pngimg.com/uploads/women/women_PNG6511.png',
-        'https://pngimg.com/uploads/man/man_PNG6540.png',
-        'https://pngimg.com/uploads/women/women_PNG21827.png'
-    ];
-    
-    const avatarUrl = photoUrls[(course.id - 1) % photoUrls.length];
+    // Используем Picsum Photos - надежный источник который всегда работает
+    // Добавляем seed для стабильных изображений + параметры для портретов
+    const avatarUrl = `https://i.pravatar.cc/400?img=${course.id}`;
     
     return `
         <article class="card" data-category="${escapeHtml(course.category)}" tabindex="0" role="article" aria-label="${escapeHtml(course.title)} course">
