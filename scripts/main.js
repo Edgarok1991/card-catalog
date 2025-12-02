@@ -242,11 +242,12 @@ function createCardHTML(course) {
     // Нормализация названия категории для CSS класса
     const categoryClass = course.category.toLowerCase().replace(/\s+&\s+/g, '-').replace(/\s+/g, '-');
     
-    // Используем разные сервисы для более реалистичных изображений
+    // Используем реальные фотографии людей в высоком качестве
     const avatarId = course.id;
     const gender = avatarId % 2 === 0 ? 'women' : 'men';
-    const photoNumber = Math.floor((avatarId - 1) / 2) + 1;
-    const avatarUrl = `https://randomuser.me/api/portraits/${gender}/${photoNumber}.jpg`;
+    const photoNumber = ((avatarId - 1) % 99) + 1; // 99 фото доступно для каждого пола
+    // Medium размер (128x128) для лучшего качества в круглой рамке
+    const avatarUrl = `https://randomuser.me/api/portraits/med/${gender}/${photoNumber}.jpg`;
     
     return `
         <article class="card" data-category="${escapeHtml(course.category)}" tabindex="0" role="article" aria-label="${escapeHtml(course.title)} course">
